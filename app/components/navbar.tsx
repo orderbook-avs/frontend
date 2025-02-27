@@ -125,7 +125,7 @@ const Navbar = () => {
             className={`${
               pathname === "/docs" ? "text-white" : "text-light"
             } hover:text-white transition-colors font-robotoMono no-underline`}
-            href="https://github.com/cryptobaso/cryptobaso_skale"
+            href="https://github.com/orderbook-avs"
             target="_blank"
           >
             Documentation
