@@ -19,13 +19,14 @@ const config: Config = {
         background: "#191B1C",
         light: "#ACACAC",
         navbar: "#252728",
-        primary: "#8BC8C7FF",
+        primary: "#BA8BC8FF",
       },
       backgroundImage: {
-        "button-primary": "linear-gradient(90deg, #63B9B8 0%, #4D9392 100%)",
+        "button-primary":
+          "linear-gradient(90deg, #BA8BC8FF 0%, #875193FF 100%)",
         "button-secondary": "linear-gradient(90deg, #D5D5D5 0%, #BCBCBC 100%)",
         bubble:
-          "linear-gradient(132.98deg, rgba(41, 69, 111, 0.6) 28.43%, rgba(95, 80, 143, 0.6) 110.85%)",
+          "linear-gradient(132.98deg, #6338767A 28.43%, #4E2F6C4B 110.85%)",
       },
       backdropBlur: {
         bubble: "720px",

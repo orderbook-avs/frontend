@@ -123,6 +123,14 @@ const Navbar = () => {
           </Link>
           <Link
             className={`${
+              pathname === "/chat" ? "text-white" : "text-light"
+            } hover:text-white transition-colors font-robotoMono no-underline`}
+            href="/chat"
+          >
+            Chat
+          </Link>
+          <Link
+            className={`${
               pathname === "/docs" ? "text-white" : "text-light"
             } hover:text-white transition-colors font-robotoMono no-underline`}
             href="https://github.com/orderbook-avs"

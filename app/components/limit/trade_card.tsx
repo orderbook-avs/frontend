@@ -52,12 +52,12 @@ const TradeCard = ({
             <div className="flex items-center justify-between gap-2">
               <input
                 type="number"
-                className="z-20 w-full bg-white/[.02] border border-white/[.1] rounded-lg p-2 text-white font-inriaSans focus:outline-none focus:ring-2 focus:ring-[#63B9B8]"
+                className="z-20 w-full bg-white/[.02] border border-white/[.1] rounded-lg p-2 text-white font-inriaSans focus:outline-none focus:ring-2 focus:ring-[#BA8BC89F]"
                 value={amount}
                 onChange={(e) => setAmount(Number(e.target.value))}
               />
               <select
-                className="z-20 bg-white/[.02] border border-white/[.1] rounded-lg p-2 text-white font-inriaSans focus:outline-none focus:ring-2 focus:ring-[#63B9B8]"
+                className="z-20 bg-white/[.02] border border-white/[.1] rounded-lg p-2 text-white font-inriaSans focus:outline-none focus:ring-2 focus:ring-[#BA8BC89F]"
                 defaultValue={coin}
               >
                 <option value="ETH">ETH</option>
@@ -68,12 +68,12 @@ const TradeCard = ({
             <div className="flex items-center justify-between gap-2">
               <input
                 type="number"
-                className="z-20 w-full bg-white/[.02] border border-white/[.1] rounded-lg p-2 text-white font-inriaSans focus:outline-none focus:ring-2 focus:ring-[#63B9B8]"
+                className="z-20 w-full bg-white/[.02] border border-white/[.1] rounded-lg p-2 text-white font-inriaSans focus:outline-none focus:ring-2 focus:ring-[#BA8BC89F]"
                 value={price}
                 onChange={(e) => setPrice(Number(e.target.value))}
               />
               <select
-                className="z-20 bg-white/[.02] border border-white/[.1] rounded-lg p-2 text-white font-inriaSans focus:outline-none focus:ring-2 focus:ring-[#63B9B8]"
+                className="z-20 bg-white/[.02] border border-white/[.1] rounded-lg p-2 text-white font-inriaSans focus:outline-none focus:ring-2 focus:ring-[#BA8BC89F]"
                 defaultValue={coin}
               >
                 <option value="USD">USD</option>
@@ -123,8 +123,8 @@ const TradeButton = ({
               transition-colors duration-0 ease-in-out
               ${
                 isActive
-                  ? "border-[#63B9B8] bg-button-primary"
-                  : "border-[#63B9B8]/[.50] hover:bg-[#63B9B8]/[.15]"
+                  ? "border-[#BA8BC8FF] bg-button-primary"
+                  : "border-[#BA8BC8FF]/[.50] hover:bg-[#BA8BC8FF]/[.15]"
               }
             `}
       onClick={onClick}

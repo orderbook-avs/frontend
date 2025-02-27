@@ -129,13 +129,13 @@ const CoinChart = ({ coin }: { coin: string }) => {
               boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             }}
             itemStyle={{ color: "#FFFFFF" }}
-            labelStyle={{ color: "#82ca9d", fontWeight: "bold" }}
-            cursor={{ stroke: "#82ca9d", strokeWidth: 2 }}
+            labelStyle={{ color: "#FFC8D1DB", fontWeight: "bold" }}
+            cursor={{ stroke: "#FFC8D1DB", strokeWidth: 2 }}
           />
           <Line
             type="monotone"
             dataKey="rate"
-            stroke="#82ca9d"
+            stroke="#FFC8D1DB"
             strokeOpacity={1}
             strokeWidth={2}
             activeDot={{ r: 7, stroke: "#1E1E1F", strokeWidth: 3 }}
