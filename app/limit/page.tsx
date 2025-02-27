@@ -5,11 +5,10 @@ import CoinChart from "@/app/components/limit/chart";
 import Navbar from "@/app/components/navbar";
 import Image from "next/image";
 import TradeCard from "@/app/components/limit/trade_card";
-import { BackButton } from "@/app/ui/back_button";
 import { useEffect, useState } from "react";
 
 const LimitPage = () => {
-  const [marketPrice, setMarketPrice] = useState<number>(0);
+  const [marketPrice, setMarketPrice] = useState<number>(2268.96);
   const fetchCoins = async () => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/exchangerate/ETH/USD`,
@@ -32,7 +31,7 @@ const LimitPage = () => {
   };
 
   useEffect(() => {
-    fetchCoins();
+    // fetchCoins();
   }, []);
 
   return (
@@ -44,8 +43,6 @@ const LimitPage = () => {
 
       <div className="w-full h-[calc(100vh-80px)] mt-[80px] flex justify-center">
         <div className="w-3/4 flex-col pt-8">
-          <BackButton />
-
           <div className="flex gap-4 justify-between items-center my-8">
             <div className="flex gap-4 items-center">
               <Image

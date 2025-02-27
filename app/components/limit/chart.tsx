@@ -31,6 +31,7 @@ const CoinChart = ({ coin }: { coin: string }) => {
   })();
 
   useEffect(() => {
+    console.log("Fetching coin prices for", coin);
     const fetchCoinPrices = async () => {
       const coinPrice = CoinPrices[coin as keyof typeof CoinPrices];
       if (coinPrice === undefined) return;
@@ -79,7 +80,7 @@ const CoinChart = ({ coin }: { coin: string }) => {
               month: "short",
               day: "numeric",
             }),
-            rate: item.rate_open,
+            rate: Number(item.rate_open.toFixed(2)),
           };
         });
 
