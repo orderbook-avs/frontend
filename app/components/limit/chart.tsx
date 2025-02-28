@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -17,14 +18,14 @@ const CoinChart = ({ coin }: { coin: string }) => {
   const [coinPrices, setCoinPrices] = useState<any[]>([]);
   const nearestValue = (() => {
     switch (coin) {
-      case "SKL":
-        return 0.01;
-      case "USDT":
-        return 0.001;
       case "ETH":
         return 50;
-      case "MATIC":
-        return 0.2;
+      case "WBTC":
+        return 100;
+      case "XRP":
+        return 0.01;
+      case "USDC":
+        return 0.001;
       default:
         return 1;
     }
@@ -90,11 +91,11 @@ const CoinChart = ({ coin }: { coin: string }) => {
       }
     };
 
-    fetchCoinPrices();
+    // fetchCoinPrices();
   }, [coin]);
 
   return (
-    <div className="w-2/3 h-[30rem] -ml-8">
+    <div className="w-[60%] h-[30rem] -ml-8">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           width={500}

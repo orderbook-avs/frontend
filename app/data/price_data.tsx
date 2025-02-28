@@ -217,9 +217,16 @@ export const USDTPrices = [
   },
 ];
 
+export const USDCPrices = [];
+export const WBTCPrices = [];
+export const XRPPrices = [];
+
 export const CoinPrices = {
   ETH: EthPrices,
   SKL: SKLPrices,
   USDT: USDTPrices,
   MATIC: [],
+  WBTC: WBTCPrices,
+  USDC: USDCPrices,
+  XRP: XRPPrices,
 };
