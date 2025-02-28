@@ -220,6 +220,7 @@ export const USDTPrices = [
 export const USDCPrices = [];
 export const WBTCPrices = [];
 export const XRPPrices = [];
+export const WETHPrices = [];
 
 export const CoinPrices = {
   ETH: EthPrices,
@@ -229,4 +230,5 @@ export const CoinPrices = {
   WBTC: WBTCPrices,
   USDC: USDCPrices,
   XRP: XRPPrices,
+  WETH: WETHPrices,
 };

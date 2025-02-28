@@ -12,10 +12,10 @@ const Features = () => {
           />
           <Feature
             title="AI-Powered"
-            description="OrderBookAVS uses AI to analyze market conditions and execute trades automatically, minimizing the risk of price fluctuations and ensuring greater control."
+            description="OrderBookAVS uses AI to analyze market conditions and create suggestions for the best price to buy or sell."
           />
           <Feature
-            title="Decentralized Limit Orders"
+            title="Limit Orders"
             description="OrderBookAVS allows users to create and execute limit orders on the blockchain, without relying on centralized exchanges."
           />
           <Feature
@@ -24,7 +24,7 @@ const Features = () => {
           />
           <Feature
             title="Easy to use"
-            description="OrderBookAVS has a user-friendly interface and intuitive design for seamless trading experience, suitable for both beginners and experienced traders."
+            description="OrderBookAVS has a user-friendly interface and intuitive design for seamless trading experience."
           />
           <Feature
             title="Real-Time Market Analytics"

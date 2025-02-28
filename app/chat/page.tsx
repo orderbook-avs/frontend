@@ -81,7 +81,7 @@ const Chat = () => {
             </div>
           ) : (
             <div key={index} className="my-4 flex justify-start items-center">
-              <div className="text-black font-inriaSans bg-button-secondary rounded-lg px-6 py-[7px]">
+              <div className="text-black whitespace-pre-line font-inriaSans bg-button-secondary rounded-lg px-6 py-[7px]">
                 {message.content === "Loading..." ? (
                   <BeatLoader size={8} />
                 ) : (

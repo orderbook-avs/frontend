@@ -43,7 +43,9 @@ const LimitPage = () => {
   useEffect(() => {
     const fetchCoins = async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/exchangerate/${selectedCoin.symbol}/${swapCoin.symbol}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/exchangerate/${
+          selectedCoin.symbol === "WETH" ? "ETH" : selectedCoin.symbol
+        }/${swapCoin.symbol === "WETH" ? "ETH" : swapCoin.symbol}`,
         {
           headers: {
             "X-CoinAPI-Key": process.env.NEXT_PUBLIC_API_KEY || "",
@@ -62,7 +64,7 @@ const LimitPage = () => {
       setMarketPrice(data_price.rate);
     };
 
-    // fetchCoins();
+    fetchCoins();
   }, [selectedCoin, swapCoin]);
 
   return (

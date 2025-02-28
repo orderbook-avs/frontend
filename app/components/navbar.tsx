@@ -110,7 +110,7 @@ const Navbar = () => {
           href="/"
           className="text-white font-black text-2xl font-robotoMono"
         >
-          OrderBookAVS
+          EasyOrder
         </Link>
         <div className="flex gap-8 items-center">
           <Link

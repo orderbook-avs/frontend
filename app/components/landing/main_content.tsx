@@ -10,7 +10,8 @@ const MainContent = () => {
       <div className="w-3/4 flex items-center justify-between">
         <div className="flex flex-col items-start justify-center gap-8">
           <h1 className="z-10 text-5xl font-light font-robotoMono text-white">
-            Decentralized AI-Powered<p className="pt-2">Order Book AVS</p>
+            Decentralized AI-Powered
+            <p className="pt-2">Order Book AVS</p>
           </h1>
           <PrimaryButton
             text="Create Order"

@@ -59,7 +59,9 @@ const CoinChart = ({ coin }: { coin: string }) => {
         console.log("isoDateEndString", isoDateEndString);
 
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/exchangerate/${coin}/USDC/history?period_id=1DAY&time_start=${isoDateStartString}&time_end=${isoDateEndString}&limit=7`,
+          `${process.env.NEXT_PUBLIC_API_URL}/exchangerate/${
+            coin === "WETH" ? "ETH" : coin
+          }/USDC/history?period_id=1DAY&time_start=${isoDateStartString}&time_end=${isoDateEndString}&limit=7`,
           {
             headers: {
               "X-CoinAPI-Key": process.env.NEXT_PUBLIC_API_KEY || "",
@@ -89,7 +91,7 @@ const CoinChart = ({ coin }: { coin: string }) => {
       }
     };
 
-    // fetchCoinPrices();
+    fetchCoinPrices();
   }, [coin]);
 
   return (
