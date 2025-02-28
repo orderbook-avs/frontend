@@ -18,12 +18,10 @@ const CoinChart = ({ coin }: { coin: string }) => {
   const [coinPrices, setCoinPrices] = useState<any[]>([]);
   const nearestValue = (() => {
     switch (coin) {
-      case "ETH":
+      case "WETH":
         return 50;
       case "WBTC":
         return 100;
-      case "XRP":
-        return 0.01;
       case "USDC":
         return 0.001;
       default:

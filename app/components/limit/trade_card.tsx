@@ -6,6 +6,8 @@ import { Coin, COINS } from "@/app/limit/page";
 import { SecondaryButton } from "@/app/ui/button";
 import { useEffect, useState } from "react";
 import { BeatLoader } from "react-spinners";
+import { Contract, ethers } from "ethers";
+import { abi } from "@/app/data/abi";
 
 const TradeCard = ({
   coin,
@@ -14,9 +16,9 @@ const TradeCard = ({
   setSwapCoin,
   setSelectedCoin,
 }: {
-  coin: string;
+  coin: Coin;
   marketPrice: number;
-  swapCoin: string;
+  swapCoin: Coin;
   setSwapCoin: (coin: Coin) => void;
   setSelectedCoin: (coin: Coin) => void;
 }) => {
@@ -24,6 +26,56 @@ const TradeCard = ({
   const [amount, setAmount] = useState<number>(1);
   const [price, setPrice] = useState<number>(Number(marketPrice.toFixed(5)));
   const [loading, setLoading] = useState<boolean>(false);
+
+  const placeOrder = async () => {
+    setLoading(true);
+
+    const provider = new ethers.BrowserProvider(window.ethereum);
+
+    const new_provider = new ethers.JsonRpcProvider("http://localhost:55012");
+
+    const wallet = new ethers.Wallet(
+      "0x47e179ec197488593b187f80a00eb0da91f1b9d0b13f8733639f19c30a34926a",
+      new_provider
+    );
+
+    const network = await new_provider.getNetwork();
+
+    const chainId = network.chainId;
+
+    const balance = await new_provider.getBalance(wallet.address);
+
+    console.log("balance", balance);
+
+    const contract = new Contract(
+      "0x34b40ba116d5dec75548a9e9a8f15411461e8c70",
+      abi,
+      wallet
+    );
+
+    console.log(
+      "Placing limit order for",
+      amount,
+      coin.address,
+      " for ",
+      price,
+      swapCoin.address
+    );
+
+    const tx = await contract.createNewTask(
+      amount,
+      price,
+      coin.address,
+      swapCoin.address,
+      5,
+      5,
+      "0x0000000000000000000000000000000000000000000000000000000000000001"
+    );
+
+    console.log("tx", tx);
+
+    setLoading(false);
+  };
 
   const fetchAgent = async () => {
     const response = await fetch(
@@ -81,7 +133,7 @@ const TradeCard = ({
 
           <div className="flex mt-4 flex-col w-full gap-2">
             <p className="text-light text-sm font-inriaSans">
-              Amount of {coin}.
+              Amount of {coin.symbol}.
             </p>
             <div className="flex items-center justify-between gap-2">
               <input
@@ -92,17 +144,21 @@ const TradeCard = ({
               />
               <select
                 className="z-20 bg-white/[.02] border border-white/[.1] rounded-lg p-2 text-white font-inriaSans focus:outline-none focus:ring-2 focus:ring-[#BA8BC89F]"
-                defaultValue={coin}
+                defaultValue={coin.symbol}
                 onChange={(e) =>
                   setSelectedCoin(
                     COINS.find((c) => c.symbol === e.target.value)!
                   )
                 }
               >
-                <option value="ETH">ETH</option>
-                <option value="WBTC">WBTC</option>
-                <option value="XRP">XRP</option>
-                <option value="USDC">USDC</option>
+                {COINS.map(
+                  (c) =>
+                    c.symbol !== swapCoin.symbol && (
+                      <option key={c.symbol} value={c.symbol}>
+                        {c.symbol}
+                      </option>
+                    )
+                )}
               </select>
             </div>
 
@@ -122,15 +178,19 @@ const TradeCard = ({
               </button>
               <select
                 className="z-20 bg-white/[.02] border border-white/[.1] rounded-lg p-2 text-white font-inriaSans focus:outline-none focus:ring-2 focus:ring-[#BA8BC89F]"
-                defaultValue={swapCoin}
+                defaultValue={swapCoin.symbol}
                 onChange={(e) =>
                   setSwapCoin(COINS.find((c) => c.symbol === e.target.value)!)
                 }
               >
-                <option value="USDC">USDC</option>
-                <option value="WBTC">WBTC</option>
-                <option value="XRP">XRP</option>
-                <option value="ETH">ETH</option>
+                {COINS.map(
+                  (c) =>
+                    c.symbol !== coin.symbol && (
+                      <option key={c.symbol} value={c.symbol}>
+                        {c.symbol}
+                      </option>
+                    )
+                )}
               </select>
             </div>
           </div>
@@ -148,7 +208,7 @@ const TradeCard = ({
         <div className="h-10 w-full">
           <SecondaryButton
             text="Place Order"
-            onClick={() => {}}
+            onClick={() => placeOrder()}
             fullWidth
             fullHeight
           >

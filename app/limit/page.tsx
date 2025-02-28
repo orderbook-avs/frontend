@@ -8,38 +8,37 @@ import TradeCard from "@/app/components/limit/trade_card";
 import { useEffect, useState } from "react";
 
 export type Coin = {
-  name: "ETH" | "Wrapped Bitcoin" | "XRP" | "USDC";
-  symbol: "ETH" | "WBTC" | "XRP" | "USDC";
+  name: "Wrapped Ether" | "Wrapped Bitcoin" | "USDC";
+  symbol: "WETH" | "WBTC" | "USDC";
   image: string;
+  address: string;
 };
 
 export const COINS: Coin[] = [
   {
-    name: "ETH",
-    symbol: "ETH",
+    name: "Wrapped Ether",
+    symbol: "WETH",
     image: "/coins/ethereum.png",
+    address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
   },
   {
     name: "Wrapped Bitcoin",
     symbol: "WBTC",
     image: "/coins/bitcoin.png",
-  },
-  {
-    name: "XRP",
-    symbol: "XRP",
-    image: "/coins/xrp.png",
+    address: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
   },
   {
     name: "USDC",
     symbol: "USDC",
     image: "/coins/usdc.png",
+    address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
   },
 ];
 
 const LimitPage = () => {
   const [marketPrice, setMarketPrice] = useState<number>(2268.96);
   const [selectedCoin, setSelectedCoin] = useState<Coin>(COINS[0]);
-  const [swapCoin, setSwapCoin] = useState<Coin>(COINS[3]);
+  const [swapCoin, setSwapCoin] = useState<Coin>(COINS[2]);
 
   useEffect(() => {
     const fetchCoins = async () => {
@@ -98,9 +97,9 @@ const LimitPage = () => {
           <div className="flex gap-4">
             <CoinChart coin={selectedCoin.symbol} />
             <TradeCard
-              coin={selectedCoin.symbol}
+              coin={selectedCoin}
               marketPrice={marketPrice}
-              swapCoin={swapCoin.symbol}
+              swapCoin={swapCoin}
               setSwapCoin={setSwapCoin}
               setSelectedCoin={setSelectedCoin}
             />
