@@ -133,7 +133,7 @@ const Navbar = () => {
             className={`${
               pathname === "/docs" ? "text-white" : "text-light"
             } hover:text-white transition-colors font-robotoMono no-underline`}
-            href="https://github.com/orderbook-avs"
+            href="https://github.com/orderbook-avs/readme"
             target="_blank"
           >
             Documentation

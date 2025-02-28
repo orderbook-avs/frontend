@@ -7,7 +7,7 @@ import { SecondaryButton } from "@/app/ui/button";
 import { useEffect, useState } from "react";
 import { BeatLoader } from "react-spinners";
 import { Contract, ethers } from "ethers";
-import { abi } from "@/app/data/abi";
+import { abi, wBTCAbi, wETHAbi } from "@/app/data/abi";
 
 const TradeCard = ({
   coin,
@@ -26,32 +26,62 @@ const TradeCard = ({
   const [amount, setAmount] = useState<number>(1);
   const [price, setPrice] = useState<number>(Number(marketPrice.toFixed(5)));
   const [loading, setLoading] = useState<boolean>(false);
+  const [isBuy, setIsBuy] = useState<boolean>(true);
+  const [getPriceLoading, setGetPriceLoading] = useState<boolean>(false);
 
   const placeOrder = async () => {
     setLoading(true);
 
-    const provider = new ethers.BrowserProvider(window.ethereum);
+    const aggregator = new ethers.JsonRpcProvider("http://localhost:55032");
 
-    const new_provider = new ethers.JsonRpcProvider("http://localhost:55012");
+    const wBTCAddress = "0x34b40ba116d5dec75548a9e9a8f15411461e8c70";
+    const wETHAddress = "0xd0141e899a65c95a556fe2b27e5982a6de7fdd7a";
+    const taskManagerAddress = "0x07882ae1ecb7429a84f1d53048d35c4bb2056877";
 
     const wallet = new ethers.Wallet(
       "0x47e179ec197488593b187f80a00eb0da91f1b9d0b13f8733639f19c30a34926a",
-      new_provider
+      aggregator
     );
 
-    const network = await new_provider.getNetwork();
+    // Browser provider
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    const provider = new ethers.BrowserProvider(window.ethereum);
 
-    const chainId = network.chainId;
+    const signer = await provider.getSigner();
 
-    const balance = await new_provider.getBalance(wallet.address);
+    const wETHContract = new Contract(wETHAddress, wETHAbi, signer);
 
-    console.log("balance", balance);
+    const accounts = await window.ethereum
+      .request({
+        method: "wallet_requestPermissions",
+        params: [
+          {
+            eth_accounts: {},
+          },
+        ],
+      })
+      .then(() =>
+        window.ethereum.request({
+          method: "eth_requestAccounts",
+        })
+      );
 
-    const contract = new Contract(
-      "0x34b40ba116d5dec75548a9e9a8f15411461e8c70",
-      abi,
-      wallet
+    console.log("accounts", accounts);
+
+    const network = await aggregator.getNetwork();
+    const chainId = await window.ethereum.request({
+      method: "eth_chainId",
+    });
+
+    // Approve transaction
+    const approveTx = await wETHContract.approve(
+      taskManagerAddress,
+      ethers.parseEther(amount.toString())
     );
+
+    await approveTx.wait();
+
+    const contract = new Contract(taskManagerAddress, abi, wallet);
 
     console.log(
       "Placing limit order for",
@@ -63,12 +93,12 @@ const TradeCard = ({
     );
 
     const tx = await contract.createNewTask(
-      amount,
-      price,
-      coin.address,
-      swapCoin.address,
+      isBuy ? price : amount,
+      isBuy ? amount : price,
+      wETHAddress,
+      wBTCAddress,
       5,
-      5,
+      0,
       "0x0000000000000000000000000000000000000000000000000000000000000001"
     );
 
@@ -78,32 +108,37 @@ const TradeCard = ({
   };
 
   const fetchAgent = async () => {
-    const response = await fetch(
-      "https://autonome.alt.technology/test1-klhnbn/agents"
-    );
+    const response = await fetch("http://localhost:3001/agents", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Basic b3JkZXItYWk6TFdpR1BJaExaSg==",
+      },
+    });
     const data = await response.json();
     return data.agents[0].id;
   };
 
   const fetchAIPrice = async () => {
+    setGetPriceLoading(true);
     const agent = await fetchAgent();
 
-    const response = await fetch(
-      `https://autonome.alt.technology/test1-klhnbn/${agent}/message`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          text: "Please run the get price suggestion button action.",
-        }),
-      }
-    );
+    const response = await fetch(`http://localhost:3001/${agent}/message`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Basic b3JkZXItYWk6TFdpR1BJaExaSg==",
+      },
+      body: JSON.stringify({
+        text: "Please run the get price suggestion button action.",
+      }),
+    });
     const data = await response.json();
 
-    console.log("data", data);
+    console.log("data", JSON.parse(data[1].text));
 
-    setPrice(Number(data[1].text.ratio));
+    setPrice(Number(JSON.parse(data[1].text)["ratio"]));
+    setGetPriceLoading(false);
   };
-
   useEffect(() => {
     setPrice(Number(marketPrice.toFixed(5)));
   }, [marketPrice]);
@@ -172,9 +207,9 @@ const TradeCard = ({
               />
               <button
                 className="mr-2 h-10 z-20 max-w-24 whitespace-nowrap relative flex justify-center items-center bg-button-secondary cursor-pointer text-black px-6 py-2 rounded-r-lg font-inriaSans"
-                onClick={() => {}}
+                onClick={() => fetchAIPrice()}
               >
-                AI Tip
+                {getPriceLoading ? <BeatLoader size={6} /> : "AI Tip"}
               </button>
               <select
                 className="z-20 bg-white/[.02] border border-white/[.1] rounded-lg p-2 text-white font-inriaSans focus:outline-none focus:ring-2 focus:ring-[#BA8BC89F]"

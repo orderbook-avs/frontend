@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
-import Navbar from "../navbar";
+import Navbar from "../components/navbar";
 import { BeatLoader } from "react-spinners";
 
 const Chat = () => {
@@ -18,16 +18,13 @@ const Chat = () => {
 
   useEffect(() => {
     const fetchAgent = async () => {
-      const response = await fetch(
-        "https://autonome.alt.technology/test1-klhnbn/agents",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Basic dGVzdDE6aXdGcWN5SlZLTg==",
-          },
-        }
-      );
+      const response = await fetch("http://localhost:3001/agents", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Basic b3JkZXItYWk6TFdpR1BJaExaSg==",
+        },
+      });
       const data = await response.json();
 
       console.log("Agent", data.agents[0].id);
@@ -45,17 +42,14 @@ const Chat = () => {
     setChat([...chat, ...messages]);
     setChatMessage("");
 
-    const response = await fetch(
-      `https://autonome.alt.technology/test1-klhnbn/${agent}/message`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Basic bmFkZXI6cElDVHRaYURUYw==",
-        },
-        body: JSON.stringify({ text: chatMessage }),
-      }
-    );
+    const response = await fetch(`http://localhost:3001/${agent}/message`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Basic b3JkZXItYWk6TFdpR1BJaExaSg==",
+      },
+      body: JSON.stringify({ text: chatMessage }),
+    });
 
     const data = await response.json();
 
